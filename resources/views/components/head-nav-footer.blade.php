@@ -4,10 +4,13 @@
     <meta charset="utf-8">
     <title>{{ $pageName }}</title>
     @vite('resources/css/app.css')
+    <script src="https://kit.fontawesome.com/403eb08f15.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="bg-[#ffefdb]">
     <x-navbar />
-    {{ $slot }}
+    <div class="flex flex-col justify-center">
+        {{ $slot }}
+    </div>
     <x-footer />
 </body>
 
