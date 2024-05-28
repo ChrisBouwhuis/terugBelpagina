@@ -21,13 +21,16 @@ class OrderControler extends Controller
     public function store(Request $request)
     {
         try {
+            // validation of the request to make sure the data is correct
             $request->validate([
-                'firstName' => 'required',
-                'lastName' => 'required',
-                'phone' => 'required',
-                'email' => 'required',
-                'comment' => 'required',
+                'firstName' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+                'lastName' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+                'phone' => ['required', 'string', 'max:255', 'regex:/^[0-9\s]*$/', 'min:10'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'comment' => ['required', 'string', 'max:255'],
             ]);
+
+
             $callbackOrder = new CallbackOrder();
             $name = $request->firstName . " " . $request->firstName;
             $callbackOrder->name = $name;
