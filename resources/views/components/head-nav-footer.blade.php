@@ -5,6 +5,7 @@
     <title>{{ $pageName }}</title>
     @vite('resources/css/app.css')
     <script src="https://kit.fontawesome.com/403eb08f15.js" crossorigin="anonymous"></script>
+    @livewireStyles
 </head>
 <body class="bg-[#DCE0D9]">
     <x-navbar />
@@ -12,5 +13,6 @@
         {{ $slot }}
     </div>
     <x-footer />
+    @livewireScripts
 </body>
 
