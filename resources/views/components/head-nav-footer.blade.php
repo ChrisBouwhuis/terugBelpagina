@@ -6,7 +6,7 @@
     @vite('resources/css/app.css')
     <script src="https://kit.fontawesome.com/403eb08f15.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-[#ffefdb]">
+<body class="bg-[#DCE0D9]">
     <x-navbar />
     <div class="flex flex-col justify-center">
         {{ $slot }}
