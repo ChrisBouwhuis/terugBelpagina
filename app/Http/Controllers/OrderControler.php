@@ -22,14 +22,15 @@ class OrderControler extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required',
+                'firstName' => 'required',
+                'lastName' => 'required',
                 'phone' => 'required',
                 'email' => 'required',
                 'comment' => 'required',
             ]);
             $callbackOrder = new CallbackOrder();
-            // gonna split this into first name and last name
-            $callbackOrder->name = $request->name;
+            $name = $request->firstName . " " . $request->firstName;
+            $callbackOrder->name = $name;
             $callbackOrder->phone = $request->phone;
             $callbackOrder->email = $request->email;
             $callbackOrder->comment = $request->comment;
