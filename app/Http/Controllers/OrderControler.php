@@ -12,7 +12,7 @@ class OrderControler extends Controller
      */
     public function index()
     {
-        return view('terugbelPagina');
+        return view('callback-page');
     }
 
     /**
@@ -32,7 +32,7 @@ class OrderControler extends Controller
 
 
             $callbackOrder = new CallbackOrder();
-            $name = $request->firstName . " " . $request->firstName;
+            $name = $request->firstName . " " . $request->lastName;
             $callbackOrder->name = $name;
             $callbackOrder->phone = $request->phone;
             $callbackOrder->email = $request->email;
