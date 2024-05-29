@@ -14,5 +14,12 @@ class CallbackOrder extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'phone', 'email', 'comment'];
+    protected $fillable = [
+        'name',
+        'phone',
+        'email',
+        'comment',
+        'status',
+        'department',
+    ];
 }

@@ -14,9 +14,17 @@ class CreateCallbackOrder extends Component
     {
         $this->form->validate();
 
-        CallbackOrder::create(
-            $this->form->all()
-        );
+        // om voornaam en achternaam samen te voegen
+        $name = $this->form->firstName . " " . $this->form->lastName;
+
+        CallbackOrder::create([
+            'name' => $name,
+            'phone' => $this->form->phone,
+            'email' => $this->form->email,
+            'comment' => $this->form->comment,
+        ]);
+
+        $this->redirect(route('success'));
     }
 
     public function render()

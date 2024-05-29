@@ -7,4 +7,4 @@ Route::get('/', [OrderControler::class , 'index'])->name('callbackOrder.index');
 
 Route::get('/success', function () {
     return view('success');
-});
+})->name('success');

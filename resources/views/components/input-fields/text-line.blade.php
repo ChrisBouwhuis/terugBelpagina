@@ -7,7 +7,7 @@
 )
 
 <div class="flex group rounded-md overflow-hidden flex-row">
-    <div class="bg-slate-400 flex justify-center items-center w-10 h-12"><i
+    <div class="bg-slate-400 flex justify-center items-center h-12"><i
             class="p-3 fa-{{ $iconType }} fa-{{ $icon }}"></i></div>
     <input type="text" {{ $attributes }}
     class="w-full h-12 p-3 border border-gray-300 rounded-r-md shadow-sm bg-slate-200
