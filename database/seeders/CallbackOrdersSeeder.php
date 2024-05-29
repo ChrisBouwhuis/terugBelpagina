@@ -13,6 +13,6 @@ class CallbackOrdersSeeder extends Seeder
      */
     public function run(): void
     {
-        CallbackOrder::factory(10)->create();
+        CallbackOrder::factory(50)->create();
     }
 }

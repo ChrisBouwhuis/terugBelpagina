@@ -1,5 +1,5 @@
 <div>
-    <form  method="post" action="{{ route('create.callbackOrder') }}" class="bg-slate-100 w-[35rem] pb-8 px-8 rounded-lg border-black border-2 grid grid-cols-12 gap-4 pt-5">
+    <form  wire:submit="save" class="bg-slate-100 w-[35rem] pb-8 px-8 rounded-lg border-black border-2 grid grid-cols-12 gap-4 pt-5">
         @csrf
         <div class="col-span-6">
             <x-input-fields.text-input
