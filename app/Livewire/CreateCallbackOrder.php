@@ -24,6 +24,7 @@ class CreateCallbackOrder extends Component
             'comment' => $this->form->comment,
         ]);
 
+        session()->flash('success', 'Order created successfully');
         $this->redirect(route('success'));
     }
 

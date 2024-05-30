@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-start-1 col-span-3 mt-2">
+        <div class="col-start-10 col-span-3 mt-2">
             <x-input-fields.animated-button
                 type="submit"
             >

@@ -7,7 +7,7 @@
     <script src="https://kit.fontawesome.com/403eb08f15.js" crossorigin="anonymous"></script>
     @livewireStyles
 </head>
-<body class="bg-[#DCE0D9]">
+<body class="bg-[#DCE0D9] text-gray-800">
     <x-navbar />
     <div class="flex flex-col justify-center">
         {{ $slot }}
