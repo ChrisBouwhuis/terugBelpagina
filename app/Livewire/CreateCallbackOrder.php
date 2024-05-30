@@ -25,7 +25,7 @@ class CreateCallbackOrder extends Component
         ]);
 
         session()->flash('success', 'Order created successfully');
-        $this->redirect(route('success'));
+        $this->redirect(route('home'));
     }
 
     public function render()

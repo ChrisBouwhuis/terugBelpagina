@@ -12,7 +12,3 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return redirect(route('home'));
 });
-
-Route::get('/success', function () {
-    return view('home-page')-> with('success', 'Order created successfully');
-})->name('success');
