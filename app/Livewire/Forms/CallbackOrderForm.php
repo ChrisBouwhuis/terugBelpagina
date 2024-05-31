@@ -8,17 +8,13 @@ use Livewire\Form;
 class CallbackOrderForm extends Form
 {
     #[Validate(['required', 'string', 'min:2', 'max:255'])]
-    public $firstName;
-
+    private $firstName;
     #[Validate(['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'])]
-    public $lastName;
-
+    private $lastName;
     #[Validate(['required', 'string', 'max:255', 'regex:/^[0-9\s]*$/', 'min:10'])]
-    public $phone;
-
+    private $phone;
     #[Validate(['required', 'string', 'email', 'max:255'])]
-    public $email;
-
+    private $email;
     #[Validate(['required', 'string', 'max:255'])]
-    public $comment;
+    private $comment;
 }

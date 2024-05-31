@@ -54,7 +54,6 @@ class CallbackOrderResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    // pas dit aan om de created_at kolom standaard te verbergen
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
@@ -64,14 +63,14 @@ class CallbackOrderResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('comment')
-                    ->searchable(),
+//                Tables\Columns\TextColumn::make('email')
+//                    ->searchable(),
+//                Tables\Columns\TextColumn::make('comment')
+//                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('department')
-                    ->searchable(),
+//                Tables\Columns\TextColumn::make('department')
+//                    ->searchable(),
             ])
             ->filters([
                 //
