@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('callback_orders', function (Blueprint $table) {
+        Schema::create('assignments', function (Blueprint $table) {
             $table->id()->primary();
+            $table->foreignId('callback_orders_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('comment');
-            // 0 - new, 1 - in progress, 2 - done
-            $table->tinyInteger('status')->default(0);
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('callback_order');
+        //
     }
 };
