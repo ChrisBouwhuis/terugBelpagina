@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\CallbackOrder;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id()->primary();
-            $table->foreignId('callback_orders_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->text('additional_comment');
+            $table->foreignIdFor(CallbackOrder::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->text('additional_comment')->nullable();
             $table->timestamps();
         });
     }

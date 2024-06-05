@@ -13,4 +13,9 @@ class Assignment extends Model
         'additional_comment',
     ];
 
+    public function callbackOrder(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CallbackOrder::class);
+    }
+
 }

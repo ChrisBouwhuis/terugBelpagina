@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('callback_orders', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->timestamps();
             $table->string('name');
             $table->string('phone');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('callback_order');
+        Schema::dropIfExists('callback_orders');
     }
 };
