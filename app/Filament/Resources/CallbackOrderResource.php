@@ -51,6 +51,7 @@ class CallbackOrderResource extends Resource
                             ->readonly(),
                     ]),
                 Select::make('assigned_to')
+                    ->columnSpan(['default' => 'full', 'lg' => '2'])
                     ->placeholder('order has not been assigned yet')
                     ->options(User::all()->pluck('name', 'id')->toArray())
                     ->searchable(),
@@ -78,7 +79,9 @@ class CallbackOrderResource extends Resource
 //                Tables\Columns\TextColumn::make('comment')
 //                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                ,
 //                Tables\Columns\TextColumn::make('department')
 //                    ->searchable(),
             ])
@@ -107,7 +110,7 @@ class CallbackOrderResource extends Resource
         return [
             'index' => Pages\ListCallbackOrders::route('/'),
 //            'create' => Pages\CreateCallbackOrder::route('/create'),
-            'edit' => Pages\EditCallbackOrder::route('/{record}/edit'),
+//            'edit' => Pages\EditCallbackOrder::route('/{record}/edit'),
         ];
     }
 }
