@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CallbackOrder extends Model
 {
@@ -21,11 +21,12 @@ class CallbackOrder extends Model
         'email',
         'comment',
         'status',
-        'department',
+        'user_id',
+        'companyComment',
     ];
 
-    public function assignment() : HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(Assignment::class,);
+        return $this->belongsTo(User::class);
     }
 }

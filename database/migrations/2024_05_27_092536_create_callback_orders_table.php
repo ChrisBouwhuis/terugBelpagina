@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,8 @@ return new class extends Migration
             $table->string('comment');
             // 0 - new, 1 - in progress, 2 - done
             $table->enum('status', ['new', 'in progress', 'done'])->default('new');
+            $table->foreignIdFor(User::class)->nullable()->constrained()->onDelete('set null')->onUpdate('cascade');
+            $table->text('companyComment')->nullable();
         });
     }
 

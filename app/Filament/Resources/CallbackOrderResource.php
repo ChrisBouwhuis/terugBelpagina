@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CallbackOrderResource\Pages;
 use App\Models\CallbackOrder;
 use App\Models\User;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -47,14 +48,26 @@ class CallbackOrderResource extends Resource
                             ->readOnly()
                             ->columnSpan('full')
                             ->maxLength(255),
-                        TextInput::make('status')
-                            ->readonly(),
                     ]),
-                Select::make('assigned_to')
+                Select::make('user_id')
+                    ->label('Assign to')
                     ->columnSpan(['default' => 'full', 'lg' => '2'])
-                    ->placeholder('order has not been assigned yet')
                     ->options(User::all()->pluck('name', 'id')->toArray())
+                    ->placeholder('No user assigned')
                     ->searchable(),
+                Select::make('status')
+                    ->columnSpan(['default' => 'full', 'lg' => '2'])
+                    ->options([
+                        'new' => 'New',
+                        'in progress' => 'In Progress',
+                        'done' => 'Done',
+                    ])
+                    ->placeholder('Select a status')
+                    ->required(),
+                RichEditor::make('companyComment')
+                    ->columnSpan('full')
+                    ->toolbarButtons(['undo', 'redo', 'bold', 'italic', 'underline', 'strike', 'link', 'heading', 'numberedList', 'bulletedList', 'alignment', 'indent', 'outdent', 'codeBlock', 'code', 'table', 'image', 'video', 'fullScreen', 'removeFormat'])
+                    ->placeholder('internal comment for the company')
             ]);
     }
 
@@ -70,28 +83,20 @@ class CallbackOrderResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
-                    ->searchable(),
-//                Tables\Columns\TextColumn::make('email')
-//                    ->searchable(),
-//                Tables\Columns\TextColumn::make('comment')
-//                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Assigned to')
+                    ->searchable()
                     ->sortable()
-                ,
-//                Tables\Columns\TextColumn::make('department')
-//                    ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                    ->label('Assign'),
-
+                    ->label('Assign')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -111,8 +116,13 @@ class CallbackOrderResource extends Resource
     {
         return [
             'index' => Pages\ListCallbackOrders::route('/'),
-//            'create' => Pages\CreateCallbackOrder::route('/create'),
-//            'edit' => Pages\EditCallbackOrder::route('/{record}/edit'),
+            'create' => Pages\CreateCallbackOrder::route('/create'),
+            'edit' => Pages\EditCallbackOrder::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }
