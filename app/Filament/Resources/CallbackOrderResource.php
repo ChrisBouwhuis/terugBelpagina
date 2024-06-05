@@ -3,15 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CallbackOrderResource\Pages;
-use App\Filament\Resources\CallbackOrderResource\RelationManagers;
 use App\Models\CallbackOrder;
-use Filament\Forms;
+use App\Models\User;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CallbackOrderResource extends Resource
 {
@@ -22,28 +23,37 @@ class CallbackOrderResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(4)
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('comment')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('new'),
-                Forms\Components\TextInput::make('department')
-                    ->maxLength(255)
-                    ->default('sales'),
+                Section::make()
+                    ->columnSpan('full')
+                    ->columns(4)
+                    ->heading('Contact Information')
+                    ->description('information about the person who made the callback request')
+                    ->schema([
+                        TextInput::make('name')
+                            ->readOnly()
+                            ->columnSpan(['default' => 'full', 'lg' => '2'])
+                            ->maxLength(255),
+                        TextInput::make('phone')
+                            ->readOnly()
+                            ->columnSpan(['default' => 'full', 'lg' => '2'])
+                            ->maxLength(255),
+                        TextInput::make('email')
+                            ->readOnly()
+                            ->columnSpan('full')
+                            ->maxLength(255),
+                        Textarea::make('comment')
+                            ->readOnly()
+                            ->columnSpan('full')
+                            ->maxLength(255),
+                        TextInput::make('status')
+                            ->readonly(),
+                    ]),
+                Select::make('assigned_to')
+                    ->placeholder('order has not been assigned yet')
+                    ->options(User::all()->pluck('name', 'id')->toArray())
+                    ->searchable(),
             ]);
     }
 
@@ -96,7 +106,7 @@ class CallbackOrderResource extends Resource
     {
         return [
             'index' => Pages\ListCallbackOrders::route('/'),
-            'create' => Pages\CreateCallbackOrder::route('/create'),
+//            'create' => Pages\CreateCallbackOrder::route('/create'),
             'edit' => Pages\EditCallbackOrder::route('/{record}/edit'),
         ];
     }
