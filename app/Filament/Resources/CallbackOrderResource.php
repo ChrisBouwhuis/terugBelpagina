@@ -105,12 +105,14 @@ class CallbackOrderResource extends Resource
                         ->label('Not finished')
                         ->query(function (EloquentBuilder $query) {
                             $query->where('status', 'not like', 'done');
-                        }),
+                        })
+                        ->default(true),
                     Filter::make('is_assigned_to_me')
                         ->label('Assigned to me')
                         ->query(function (EloquentBuilder $query) {
                             $query->where('user_id', auth()->id());
-                        }),
+                        })
+                        ->default(true),
                     Filter::make('is_done')
                         ->label('Finished')
                         ->query(function (EloquentBuilder $query) {

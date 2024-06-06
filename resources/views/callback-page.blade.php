@@ -1,5 +1,5 @@
 <x-head-nav-footer
-:pageName="'Callback aanvraag'"
+    :pageName="'Callback aanvraag'"
 >
     <div class="grid place-items-center mt-8">
         <div class="border-black border-2 h-full p-4 rounded bg-slate-200/50">
