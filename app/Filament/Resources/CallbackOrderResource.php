@@ -13,7 +13,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class CallbackOrderResource extends Resource
 {
@@ -73,36 +75,60 @@ class CallbackOrderResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Assigned to')
-                    ->searchable()
-                    ->sortable()
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make()
-                    ->label('Assign')
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        try {
+            return $table
+                ->columns([
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        //                    ->toggleable(isToggledHiddenByDefault: true)
+                        ->dateTime()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('user.name')
+                        ->label('Assigned to')
+                        ->searchable()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('status')
+                        ->badge()
+                        ->color(fn (CallbackOrder $record) => match ($record->status) {
+                            'new' => 'gray',
+                            'in progress' => 'warning',
+                            'done' => 'success',
+                        })
+                        ->searchable()
+                        ->sortable(),
+                ])
+                ->filters([
+                    Filter::make('is_not_done')
+                        ->label('Not finished')
+                        ->query(function (EloquentBuilder $query) {
+                            $query->where('status', 'not like', 'done');
+                        }),
+                    Filter::make('is_assigned_to_me')
+                        ->label('Assigned to me')
+                        ->query(function (EloquentBuilder $query) {
+                            $query->where('user_id', auth()->id());
+                        }),
+                    Filter::make('is_done')
+                        ->label('Finished')
+                        ->query(function (EloquentBuilder $query) {
+                            $query->where('status', 'done');
+                        }),
+                ])
+                ->actions([
+                    Tables\Actions\EditAction::make()
+                        ->label('Assign')
+                ])
+                ->bulkActions([
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                    ]),
+                ]);
+        } catch (\Exception $e) {
+            return $table;
+        }
     }
 
     public static function getRelations(): array
