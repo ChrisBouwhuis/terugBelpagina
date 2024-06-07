@@ -23,6 +23,18 @@ class CallbackOrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getPluralModelLabel() : string
+    {
+        return __('Callback orders');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Callback orders');
+    }
+
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -35,24 +47,28 @@ class CallbackOrderResource extends Resource
                     ->description('information about the person who made the callback request')
                     ->schema([
                         TextInput::make('name')
+                            ->label(__('Name'))
                             ->readOnly()
                             ->columnSpan(['default' => 'full', 'lg' => '2'])
                             ->maxLength(255),
                         TextInput::make('phone')
+                            ->label(__('Telephone number'))
                             ->readOnly()
                             ->columnSpan(['default' => 'full', 'lg' => '2'])
                             ->maxLength(255),
                         TextInput::make('email')
+                            ->label(__('Email'))
                             ->readOnly()
                             ->columnSpan('full')
                             ->maxLength(255),
                         Textarea::make('comment')
+                            ->label(__('Subject'))
                             ->readOnly()
                             ->columnSpan('full')
                             ->maxLength(255),
                     ]),
                 Select::make('user_id')
-                    ->label('Assign to')
+                    ->label(__('Assign to'))
                     ->columnSpan(['default' => 'full', 'lg' => '2'])
                     ->options(User::all()->pluck('name', 'id')->toArray())
                     ->placeholder('No user assigned')
@@ -60,16 +76,17 @@ class CallbackOrderResource extends Resource
                 Select::make('status')
                     ->columnSpan(['default' => 'full', 'lg' => '2'])
                     ->options([
-                        'new' => 'New',
-                        'in progress' => 'In Progress',
-                        'done' => 'Done',
+                        'new' => __('New'),
+                        'in progress' => __('In progress'),
+                        'done' => __('Done'),
                     ])
-                    ->placeholder('Select a status')
+                    ->placeholder(__('Select a status'))
                     ->required(),
                 RichEditor::make('companyComment')
+                    ->label(__('Company comment'))
                     ->columnSpan('full')
                     ->toolbarButtons(['undo', 'redo', 'bold', 'italic', 'underline', 'strike', 'link', 'heading', 'numberedList', 'bulletedList', 'alignment', 'indent', 'outdent', 'codeBlock', 'code', 'table', 'image', 'video', 'fullScreen', 'removeFormat'])
-                    ->placeholder('internal comment for the company')
+                    ->placeholder(__('Internal comment')),
             ]);
     }
 
@@ -79,18 +96,21 @@ class CallbackOrderResource extends Resource
             return $table
                 ->columns([
                     Tables\Columns\TextColumn::make('created_at')
+                        ->label(__('Created at'))
 //                        ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
                     Tables\Columns\TextColumn::make('updated_at')
+                        ->label(__('Updated at'))
                         //                    ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
                     Tables\Columns\TextColumn::make('user.name')
-                        ->label('Assigned to')
+                        ->label(__('Assigned to'))
                         ->searchable()
                         ->sortable(),
                     Tables\Columns\TextColumn::make('status')
+                        ->label(__('Status'))
                         ->badge()
                         ->color(fn (CallbackOrder $record) => match ($record->status) {
                             'new' => 'gray',
@@ -102,19 +122,19 @@ class CallbackOrderResource extends Resource
                 ])
                 ->filters([
                     Filter::make('is_not_done')
-                        ->label('Not finished')
+                        ->label(__('Not finished'))
                         ->query(function (EloquentBuilder $query) {
                             $query->where('status', 'not like', 'done');
                         })
                         ->default(true),
                     Filter::make('is_assigned_to_me')
-                        ->label('Assigned to me')
+                        ->label(__('Assigned to me'))
                         ->query(function (EloquentBuilder $query) {
                             $query->where('user_id', auth()->id());
                         })
                         ->default(true),
                     Filter::make('is_done')
-                        ->label('Finished')
+                        ->label(__('Finished'))
                         ->query(function (EloquentBuilder $query) {
                             $query->where('status', 'done');
                         }),
