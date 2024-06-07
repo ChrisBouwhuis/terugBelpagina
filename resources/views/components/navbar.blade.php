@@ -6,10 +6,10 @@
 {{--                    <a href="{{ route('home') }}" class="text-white font-bold">Home</a>--}}
 {{--                </div>--}}
                 <x-nav.nav-item href="{{ route('home') }}">
-                    Home
+                    {{ __('home') }}
                 </x-nav.nav-item>
                 <x-nav.nav-item href="{{ route('callback') }}">
-                    Contact
+                    {{ __('Contact') }}
                 </x-nav.nav-item>
             </div>
         </div>

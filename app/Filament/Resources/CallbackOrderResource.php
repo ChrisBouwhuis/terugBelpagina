@@ -121,7 +121,7 @@ class CallbackOrderResource extends Resource
                 ])
                 ->actions([
                     Tables\Actions\EditAction::make()
-                        ->label('Assign')
+                        ->label(__('Assign'))
                 ])
                 ->bulkActions([
                     Tables\Actions\BulkActionGroup::make([

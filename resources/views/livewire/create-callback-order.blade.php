@@ -4,7 +4,7 @@
             <x-input-fields.label
                 :for="'firstName'"
                 >
-                Voornaam
+                {{ __('First name') }}
             </x-input-fields.label>
             <x-input-fields.text-line
                 :icon="'user'"
@@ -19,7 +19,7 @@
             <x-input-fields.label
                 :for="'lastName'"
             >
-                Achternaam
+                {{ __('Last name') }}
             </x-input-fields.label>
             <x-input-fields.text-line
                 :icon="'user'"
@@ -34,7 +34,7 @@
             <x-input-fields.label
                 :for="'phone'"
             >
-                Telefoonnummer
+                {{ __('Telephone number') }}
             </x-input-fields.label>
             <x-input-fields.text-line
                 :icon="'phone'"
@@ -64,7 +64,7 @@
             <x-input-fields.label
                 :for="'comment'"
             >
-                Onderwerp
+                {{ __('Subject') }}
             </x-input-fields.label>
             <div class="h-[8rem] w-full">
                 <x-input-fields.text-area
@@ -81,7 +81,7 @@
             <x-input-fields.animated-button
                 type="submit"
             >
-                Verstuur
+                {{ __('Submit') }}
             </x-input-fields.animated-button>
         </div>
     </form>
