@@ -79,9 +79,9 @@ class CallbackOrderResource extends Resource
             return $table
                 ->columns([
                     Tables\Columns\TextColumn::make('created_at')
+//                        ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
-                        ->sortable()
-                        ->toggleable(isToggledHiddenByDefault: true),
+                        ->sortable(),
                     Tables\Columns\TextColumn::make('updated_at')
                         //                    ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()

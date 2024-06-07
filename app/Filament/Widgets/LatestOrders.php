@@ -14,11 +14,9 @@ class LatestOrders extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(
-                CallbackOrder::query()
-                    ->latest()
-                    ->limit(5)
-            )
+            ->paginated(false)
+            ->searchable(false)
+            ->query(CallbackOrder::query()->latest()->limit(5))
             ->columns([
                 Stack::make([
                     TextColumn::make('name')
