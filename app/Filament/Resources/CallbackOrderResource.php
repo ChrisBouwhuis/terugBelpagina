@@ -13,9 +13,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class CallbackOrderResource extends Resource
 {
@@ -32,8 +31,6 @@ class CallbackOrderResource extends Resource
     {
         return __('Callback orders');
     }
-
-
 
     public static function form(Form $form): Form
     {
@@ -67,22 +64,7 @@ class CallbackOrderResource extends Resource
                             ->columnSpan('full')
                             ->maxLength(255),
                     ]),
-                Select::make('user_id')
-                    ->label(__('Assign to'))
-                    ->columnSpan(['default' => 'full', 'lg' => '2'])
-                    ->options(User::all()->pluck('name', 'id')->toArray())
-                    ->placeholder('No user assigned')
-                    ->searchable(),
-                Select::make('status')
-                    ->columnSpan(['default' => 'full', 'lg' => '2'])
-                    ->options([
-                        'new' => __('New'),
-                        'in progress' => __('In progress'),
-                        'done' => __('Done'),
-                    ])
-                    ->placeholder(__('Select a status'))
-                    ->required(),
-                RichEditor::make('companyComment')
+                RichEditor::make('Comment.comment')
                     ->label(__('Company comment'))
                     ->columnSpan('full')
                     ->toolbarButtons(['undo', 'redo', 'bold', 'italic', 'underline', 'strike', 'link', 'heading', 'numberedList', 'bulletedList', 'alignment', 'indent', 'outdent', 'codeBlock', 'code', 'table', 'image', 'video', 'fullScreen', 'removeFormat'])
@@ -95,21 +77,21 @@ class CallbackOrderResource extends Resource
         try {
             return $table
                 ->columns([
-                    Tables\Columns\TextColumn::make('created_at')
+                    TextColumn::make('created_at')
                         ->label(__('Created at'))
 //                        ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
-                    Tables\Columns\TextColumn::make('updated_at')
+                    TextColumn::make('updated_at')
                         ->label(__('Updated at'))
-                        //                    ->toggleable(isToggledHiddenByDefault: true)
+            //                    ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
-                    Tables\Columns\TextColumn::make('user.name')
+                    TextColumn::make('connection_history.user.name')
                         ->label(__('Assigned to'))
                         ->searchable()
                         ->sortable(),
-                    Tables\Columns\TextColumn::make('status')
+                    TextColumn::make('status')
                         ->label(__('Status'))
                         ->badge()
                         ->color(fn (CallbackOrder $record) => match ($record->status) {
@@ -120,25 +102,14 @@ class CallbackOrderResource extends Resource
                         ->searchable()
                         ->sortable(),
                 ])
-                ->filters([
-                    Filter::make('is_not_done')
-                        ->label(__('Not finished'))
-                        ->query(function (EloquentBuilder $query) {
-                            $query->where('status', 'not like', 'done');
-                        })
-                        ->default(true),
-                    Filter::make('is_assigned_to_me')
-                        ->label(__('Assigned to me'))
-                        ->query(function (EloquentBuilder $query) {
-                            $query->where('user_id', auth()->id());
-                        })
-                        ->default(true),
-                    Filter::make('is_done')
-                        ->label(__('Finished'))
-                        ->query(function (EloquentBuilder $query) {
-                            $query->where('status', 'done');
-                        }),
-                ])
+//                ->filters([
+//                    Filter::make('is_assigned_to_me')
+//                        ->label(__('Assigned to me'))
+//                        ->query(function (EloquentBuilder $query) {
+//                            $query->where('user_id', auth()->id());
+//                        })
+//                        ->default(true),
+//                ])
                 ->actions([
                     Tables\Actions\EditAction::make()
                         ->label(__('Assign'))
@@ -156,7 +127,9 @@ class CallbackOrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+//            CallbackOrderResource\RelationManagers\UserRelationManager::class,
+//            CallbackOrderResource\RelationManagers\CommentRelationManager::class,
+//            CallbackOrderResource\RelationManagers\ConnectionRelationManager::class,
         ];
     }
 
