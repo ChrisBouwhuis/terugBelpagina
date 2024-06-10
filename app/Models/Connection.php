@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Connection extends Model
 {
+    public $table = 'connection_history';
+
     public function CallbackOrder(): BelongsTo
     {
         return $this->belongsTo(CallbackOrder::class);

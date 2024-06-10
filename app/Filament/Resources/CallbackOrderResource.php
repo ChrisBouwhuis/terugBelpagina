@@ -129,7 +129,7 @@ class CallbackOrderResource extends Resource
         return [
 //            CallbackOrderResource\RelationManagers\UserRelationManager::class,
 //            CallbackOrderResource\RelationManagers\CommentRelationManager::class,
-//            CallbackOrderResource\RelationManagers\ConnectionRelationManager::class,
+            CallbackOrderResource\RelationManagers\ConnectionRelationManager::class,
         ];
     }
 
