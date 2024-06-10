@@ -15,6 +15,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use PHPUnit\Metadata\Group;
+
 
 class CallbackOrderResource extends Resource
 {
@@ -36,6 +38,7 @@ class CallbackOrderResource extends Resource
     {
         return $form
             ->columns(4)
+
             ->schema([
                 Section::make()
                     ->columnSpan('full')
@@ -64,11 +67,6 @@ class CallbackOrderResource extends Resource
                             ->columnSpan('full')
                             ->maxLength(255),
                     ]),
-                RichEditor::make('Comment.comment')
-                    ->label(__('Company comment'))
-                    ->columnSpan('full')
-                    ->toolbarButtons(['undo', 'redo', 'bold', 'italic', 'underline', 'strike', 'link', 'heading', 'numberedList', 'bulletedList', 'alignment', 'indent', 'outdent', 'codeBlock', 'code', 'table', 'image', 'video', 'fullScreen', 'removeFormat'])
-                    ->placeholder(__('Internal comment')),
             ]);
     }
 
@@ -128,7 +126,7 @@ class CallbackOrderResource extends Resource
     {
         return [
 //            CallbackOrderResource\RelationManagers\UserRelationManager::class,
-//            CallbackOrderResource\RelationManagers\CommentRelationManager::class,
+            CallbackOrderResource\RelationManagers\CommentRelationManager::class,
             CallbackOrderResource\RelationManagers\ConnectionRelationManager::class,
         ];
     }

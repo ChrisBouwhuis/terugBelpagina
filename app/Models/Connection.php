@@ -10,13 +10,18 @@ class Connection extends Model
 {
     public $table = 'connection_history';
 
-    public function CallbackOrder(): BelongsTo
+    protected $fillable = [
+        'user_id',
+        'callback_order_id',
+    ];
+
+    public function callbackOrder(): BelongsTo
     {
         return $this->belongsTo(CallbackOrder::class);
     }
 
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->BelongsTo(User::class);
     }
 }

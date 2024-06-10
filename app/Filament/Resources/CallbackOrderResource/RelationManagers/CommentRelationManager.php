@@ -12,16 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CommentRelationManager extends RelationManager
 {
-    protected static string $relationship = 'Comment';
+    protected static string $relationship = 'Comments';
 
-    public function form(Form $form): Form
+    public function canCreate(): bool
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('Comments')
-                    ->required()
-                    ->maxLength(255),
-            ]);
+        return false;
     }
 
     public function table(Table $table): Table

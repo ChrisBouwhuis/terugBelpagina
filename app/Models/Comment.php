@@ -10,6 +10,7 @@ class Comment extends Model
 {
     protected $fillable = [
         'comment',
+        'callback_order_id'
     ];
 
     public function callbackOrder(): BelongsTo
