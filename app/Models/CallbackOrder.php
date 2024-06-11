@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CallbackOrder extends Model
@@ -28,8 +29,8 @@ class CallbackOrder extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function connection(): HasMany
+    public function user(): BelongsToMany
     {
-        return $this->hasMany(Connection::class);
+        return $this->BelongsToMany(User::class);
     }
 }

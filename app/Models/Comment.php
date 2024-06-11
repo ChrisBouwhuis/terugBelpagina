@@ -17,4 +17,9 @@ class Comment extends Model
     {
         return $this->belongsTo(CallbackOrder::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

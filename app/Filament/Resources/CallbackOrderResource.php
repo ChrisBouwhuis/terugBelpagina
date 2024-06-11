@@ -4,18 +4,18 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CallbackOrderResource\Pages;
 use App\Models\CallbackOrder;
-use App\Models\User;
-use Filament\Forms\Components\RichEditor;
+use App\Models\Connection;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
-use PHPUnit\Metadata\Group;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 
 class CallbackOrderResource extends Resource
@@ -85,10 +85,10 @@ class CallbackOrderResource extends Resource
             //                    ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
-                    TextColumn::make('connection_history.user.name')
-                        ->label(__('Assigned to'))
-                        ->searchable()
-                        ->sortable(),
+//                    TextColumn::make('user.name')
+//                        ->label(__('Assigned to'))
+//                        ->searchable()
+//                        ->sortable(),
                     TextColumn::make('status')
                         ->label(__('Status'))
                         ->badge()
@@ -101,16 +101,10 @@ class CallbackOrderResource extends Resource
                         ->sortable(),
                 ])
 //                ->filters([
-//                    Filter::make('is_assigned_to_me')
-//                        ->label(__('Assigned to me'))
-//                        ->query(function (EloquentBuilder $query) {
-//                            $query->where('user_id', auth()->id());
-//                        })
-//                        ->default(true),
 //                ])
                 ->actions([
                     Tables\Actions\EditAction::make()
-                        ->label(__('Assign'))
+                        ->label(__('Go to order'))
                 ])
                 ->bulkActions([
                     Tables\Actions\BulkActionGroup::make([
@@ -125,9 +119,8 @@ class CallbackOrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-//            CallbackOrderResource\RelationManagers\UserRelationManager::class,
+            CallbackOrderResource\RelationManagers\UserRelationManager::class,
             CallbackOrderResource\RelationManagers\CommentRelationManager::class,
-            CallbackOrderResource\RelationManagers\ConnectionRelationManager::class,
         ];
     }
 

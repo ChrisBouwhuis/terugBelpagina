@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,11 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
-    public function connection(): HasMany
-    {
-        return $this->hasMany(Connection::class);
-    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,5 +44,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function comment(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function callbackOrder(): BelongsToMany
+    {
+        return $this->BelongsToMany(CallbackOrder::class);
     }
 }
