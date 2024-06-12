@@ -2,13 +2,12 @@
 
 namespace App\Filament\Resources\CallbackOrderResource\RelationManagers;
 
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CommentRelationManager extends RelationManager
 {
@@ -19,6 +18,13 @@ class CommentRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                // TODO Find a way to make this read only and make it only show the user who is currently logged in
+                Forms\Components\Select::make('user_id')
+                    ->label('Name')
+                    ->options(User::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required()
+                    ->columnSpan('2'),
                 Forms\Components\RichEditor::make('comment')
                     ->label('Comment')
                     ->columnSpan('full')
@@ -31,13 +37,17 @@ class CommentRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('Comments')
             ->columns([
-                Tables\Columns\TextColumn::make('Comments'),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label(__('Name of User')),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created at')),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->label('Add Comment')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

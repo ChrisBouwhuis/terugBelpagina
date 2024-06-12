@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(CallbackOrder::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->text('comment');
         });
     }
