@@ -51,7 +51,7 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function callbackOrder(): BelongsToMany
+    public function callbackOrders(): BelongsToMany
     {
         return $this->BelongsToMany(CallbackOrder::class);
     }

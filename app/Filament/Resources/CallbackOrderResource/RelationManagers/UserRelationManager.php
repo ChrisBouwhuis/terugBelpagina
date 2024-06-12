@@ -2,13 +2,14 @@
 
 namespace App\Filament\Resources\CallbackOrderResource\RelationManagers;
 
-use Filament\Forms;
+use App\Models\User;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Tables\Actions\AttachAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use function Laravel\Prompts\text;
 
 class UserRelationManager extends RelationManager
 {
@@ -17,10 +18,12 @@ class UserRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+            ->schema(components: [
+                select::make('user')
+                    ->label('User')
+                    ->options(User::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
             ]);
     }
 
@@ -29,22 +32,25 @@ class UserRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                TextColumn::make('name'),
+                TextColumn::make('email'),
+                TextColumn::make('assigned_at'),
             ])
             ->filters([
                 //
             ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
+            ->headerActions(actions: [
+                AttachAction::make()
+                    ->label(__('Attach to User'))
+                    ->recordSelect(fn (Select $select) => $select
+                        ->options(User::all()->pluck('name', 'id'))
+                        ->searchable()
+                        ->required()
+                    ),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 }
