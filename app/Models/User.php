@@ -53,6 +53,6 @@ class User extends Authenticatable
 
     public function callbackOrders(): BelongsToMany
     {
-        return $this->BelongsToMany(CallbackOrder::class);
+        return $this->BelongsToMany(CallbackOrder::class)->withTimestamps();
     }
 }

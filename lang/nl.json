@@ -12,6 +12,8 @@
     "Finished": "Afgerond",
     "Callback orders": "Terugbelverzoeken",
     "Users": "Gebruikers",
+    "Attach to user": "Koppel aan gebruiker",
+
 
     "(and :count more error)": "(en :count andere foutmelding)",
     "(and :count more errors)": "(en :count andere foutmelding)|(en :count andere foutmeldingen)|(en :count andere foutmeldingen)",

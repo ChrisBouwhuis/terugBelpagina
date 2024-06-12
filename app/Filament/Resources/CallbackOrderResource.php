@@ -3,19 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CallbackOrderResource\Pages;
+use App\Filament\Resources\CallbackOrderResource\RelationManagers\UserRelationManager;
 use App\Models\CallbackOrder;
-use App\Models\Connection;
+use App\Models\User;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\AttachAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 
 class CallbackOrderResource extends Resource
@@ -38,8 +39,8 @@ class CallbackOrderResource extends Resource
     {
         return $form
             ->columns(4)
-
             ->schema([
+                // TODO remove buttons from form because it's read only
                 Section::make()
                     ->columnSpan('full')
                     ->columns(4)
@@ -77,7 +78,7 @@ class CallbackOrderResource extends Resource
                 ->columns([
                     TextColumn::make('created_at')
                         ->label(__('Created at'))
-//                        ->toggleable(isToggledHiddenByDefault: true)
+                        ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
                     TextColumn::make('updated_at')
@@ -85,10 +86,15 @@ class CallbackOrderResource extends Resource
             //                    ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
-//                    TextColumn::make('user.name')
-//                        ->label(__('Assigned to'))
-//                        ->searchable()
-//                        ->sortable(),
+                    TextColumn::make('user.name')
+                        ->limit(12)
+                        ->label(__('Assigned to'))
+                        ->searchable()
+                        ->sortable(),
+                    TextColumn::make('phone')
+                        ->label(__('Phone'))
+                        ->searchable()
+                        ->sortable(),
                     TextColumn::make('status')
                         ->label(__('Status'))
                         ->badge()
@@ -100,16 +106,20 @@ class CallbackOrderResource extends Resource
                         ->searchable()
                         ->sortable(),
                 ])
-//                ->filters([
-//                ])
                 ->actions([
-                    Tables\Actions\EditAction::make()
-                        ->label(__('Go to order'))
-                ])
-                ->bulkActions([
-                    Tables\Actions\BulkActionGroup::make([
-                        Tables\Actions\DeleteBulkAction::make(),
-                    ]),
+                    EditAction::make()
+                        ->label(__('Go to order')),
+
+                    // TODO fix relation
+                    AttachAction::make()
+                        ->label(__('Attach to user'))
+                        ->color('primary')
+                        ->icon('heroicon-o-link')
+                        ->recordSelect(fn (Select $select) => $select
+                            ->options(User::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->required()
+                        )
                 ]);
         } catch (\Exception $e) {
             return $table;
@@ -119,8 +129,8 @@ class CallbackOrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            CallbackOrderResource\RelationManagers\UserRelationManager::class,
             CallbackOrderResource\RelationManagers\CommentRelationManager::class,
+            CallbackOrderResource\RelationManagers\UserRelationManager::class,
         ];
     }
 
@@ -128,12 +138,16 @@ class CallbackOrderResource extends Resource
     {
         return [
             'index' => Pages\ListCallbackOrders::route('/'),
-            'create' => Pages\CreateCallbackOrder::route('/create'),
             'edit' => Pages\EditCallbackOrder::route('/{record}/edit'),
         ];
     }
 
     public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canDelete(Model $record): bool
     {
         return false;
     }

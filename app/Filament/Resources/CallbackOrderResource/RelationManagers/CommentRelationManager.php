@@ -14,9 +14,16 @@ class CommentRelationManager extends RelationManager
 {
     protected static string $relationship = 'Comments';
 
-    public function canCreate(): bool
+
+    public function form(Form $form): Form
     {
-        return false;
+        return $form
+            ->schema([
+                Forms\Components\RichEditor::make('comment')
+                    ->label('Comment')
+                    ->columnSpan('full')
+                    ->required(),
+            ]);
     }
 
     public function table(Table $table): Table

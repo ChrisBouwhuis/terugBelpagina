@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\CallbackOrderResource\RelationManagers;
 
+use AllowDynamicProperties;
+use App\Models\CallbackOrder;
 use App\Models\User;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -19,11 +22,6 @@ class UserRelationManager extends RelationManager
     {
         return $form
             ->schema(components: [
-                select::make('user')
-                    ->label('User')
-                    ->options(User::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->required(),
             ]);
     }
 
@@ -32,16 +30,19 @@ class UserRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('email'),
-                TextColumn::make('assigned_at'),
+                TextColumn::make('name')
+                    ->label(__('Name')),
+                TextColumn::make('email')
+                    ->label(__('Email')),
+                TextColumn::make('created_at')
+                    ->label(__('Created at')),
             ])
             ->filters([
                 //
             ])
             ->headerActions(actions: [
                 AttachAction::make()
-                    ->label(__('Attach to User'))
+                    ->label(__('Attach to user'))
                     ->recordSelect(fn (Select $select) => $select
                         ->options(User::all()->pluck('name', 'id'))
                         ->searchable()

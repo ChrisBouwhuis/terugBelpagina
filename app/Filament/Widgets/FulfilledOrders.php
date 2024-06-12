@@ -12,10 +12,9 @@ class FulfilledOrders extends ChartWidget
     protected function getData(): array
     {
         return [
-            'labels' => ['done', 'in progress', 'new'],
+            'labels' => [__('New'),__( 'In progress'), __('Completed')],
             'datasets' => [
                 [
-                    'label' => 'Fulfilled Orders',
                     'data' => $this->getStatusData(),
                     'backgroundColor' => [
                         'rgba(30, 252, 10, 0.5)',
@@ -23,7 +22,9 @@ class FulfilledOrders extends ChartWidget
                         'rgba(52, 52, 209, 0.5)',
                     ],
                     'borderColor' => [
-
+                        'rgba(30, 252, 10, 0.7)',
+                        'rgba(245, 255, 56, 0.7)',
+                        'rgba(52, 52, 209, 0.7)',
                     ],
                     'borderWidth' => 1,
                 ],
@@ -38,12 +39,10 @@ class FulfilledOrders extends ChartWidget
 
     protected function getStatusData(): array
     {
-        $statusData = CallbackOrder::select('status', DB::raw('count(*) as total'))
+        return CallbackOrder::select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
             ->pluck('total', 'status')
             ->values() // Reset the keys of the collection
             ->toArray();
-
-        return $statusData;
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(CallbackOrder::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->timestamp('assigned_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
