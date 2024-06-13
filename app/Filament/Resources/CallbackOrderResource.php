@@ -110,16 +110,16 @@ class CallbackOrderResource extends Resource
                     EditAction::make()
                         ->label(__('Go to order')),
 
-                    // TODO fix relation
-                    AttachAction::make()
-                        ->label(__('Attach to user'))
-                        ->color('primary')
-                        ->icon('heroicon-o-link')
-                        ->recordSelect(fn (Select $select) => $select
-                            ->options(User::all()->pluck('name', 'id'))
-                            ->searchable()
-                            ->required()
-                        )
+                    // TODO try to make this work current problem is that it cant find the relation
+//                    AttachAction::make()
+//                        ->label(__('Attach to user to order'))
+//                        ->color('primary')
+//                        ->icon('heroicon-o-link')
+//                        ->recordSelect(fn (Select $select) => $select
+//                            ->options(User::all()->pluck('name', 'id'))
+//                            ->searchable()
+//                            ->required()
+//                        ),
                 ]);
         } catch (\Exception $e) {
             return $table;
