@@ -12,7 +12,7 @@ class FulfilledOrders extends ChartWidget
     protected function getData(): array
     {
         return [
-            'labels' => [__('New'),__( 'In progress'), __('Completed')],
+            'labels' => [__('Completed'),__( 'In progress'), __('new')],
             'datasets' => [
                 [
                     'data' => $this->getStatusData(),
@@ -22,9 +22,9 @@ class FulfilledOrders extends ChartWidget
                         'rgba(52, 52, 209, 0.5)',
                     ],
                     'borderColor' => [
-                        'rgba(30, 252, 10, 0.7)',
-                        'rgba(245, 255, 56, 0.7)',
-                        'rgba(52, 52, 209, 0.7)',
+                        'rgba(30, 252, 20, 1)',
+                        'rgba(245, 255, 70, 1)',
+                        'rgba(52, 52, 255, 1)',
                     ],
                     'borderWidth' => 1,
                 ],

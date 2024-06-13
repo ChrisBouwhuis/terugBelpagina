@@ -67,7 +67,6 @@ class CallbackOrderResource extends Resource
                         Select::make('status')
                             ->label(__('Status'))
                             ->options([
-                                'new' => 'New',
                                 'in progress' => 'In progress',
                                 'done' => 'Done',
                             ])
