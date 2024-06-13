@@ -41,6 +41,9 @@ class CallbackOrderResource extends Resource
             ->columns(4)
             ->schema([
                 // TODO remove buttons from form because it's read only
+                // i dont think this is possible because i am using a edit action
+                // maybe i can make a custom form
+                // will come back to this later
                 Section::make()
                     ->columnSpan('full')
                     ->columns(4)
@@ -151,4 +154,9 @@ class CallbackOrderResource extends Resource
     {
         return false;
     }
+
+//    public static function canEdit(Model $record): bool
+//    {
+//        return false;
+//    }
 }
