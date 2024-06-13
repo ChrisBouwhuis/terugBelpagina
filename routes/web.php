@@ -13,6 +13,6 @@ Route::get('/home', function () {
     return redirect(route('home'));
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
+//Route::get('/test', function () {
+//    return view('test');
+//});

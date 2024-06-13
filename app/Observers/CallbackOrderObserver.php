@@ -11,6 +11,6 @@ class CallbackOrderObserver
      */
     public function created(CallbackOrderUser $callbackOrderUser): void
     {
-
+        // TODO: implement the status change logic
     }
 }
