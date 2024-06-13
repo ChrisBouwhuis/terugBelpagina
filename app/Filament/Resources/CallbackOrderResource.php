@@ -3,16 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CallbackOrderResource\Pages;
-use App\Filament\Resources\CallbackOrderResource\RelationManagers\UserRelationManager;
 use App\Models\CallbackOrder;
-use App\Models\User;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -118,17 +115,6 @@ class CallbackOrderResource extends Resource
                 ->actions([
                     EditAction::make()
                         ->label(__('Go to order')),
-
-                    // TODO try to make this work current problem is that it cant find the relation
-//                    AttachAction::make()
-//                        ->label(__('Attach to user to order'))
-//                        ->color('primary')
-//                        ->icon('heroicon-o-link')
-//                        ->recordSelect(fn (Select $select) => $select
-//                            ->options(User::all()->pluck('name', 'id'))
-//                            ->searchable()
-//                            ->required()
-//                        ),
                 ]);
         } catch (\Exception $e) {
             return $table;
@@ -160,9 +146,4 @@ class CallbackOrderResource extends Resource
     {
         return false;
     }
-
-//    public static function canEdit(Model $record): bool
-//    {
-//        return false;
-//    }
 }
