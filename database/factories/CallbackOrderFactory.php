@@ -21,9 +21,6 @@ class CallbackOrderFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'comment' => $this->faker->text,
-//            the following fields have default values so they are not required
-//            'status' => 'new',
-//            'department' => 'sales',
         ];
     }
 }
