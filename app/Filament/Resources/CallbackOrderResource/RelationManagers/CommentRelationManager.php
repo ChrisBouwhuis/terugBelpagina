@@ -42,9 +42,7 @@ class CommentRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Created at')),
             ])
-            ->filters([
-                //
-            ])
+            ->defaultSort('created_at', 'desc')
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->label('Add Comment')

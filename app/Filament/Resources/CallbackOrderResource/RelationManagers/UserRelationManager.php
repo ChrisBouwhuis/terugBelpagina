@@ -34,12 +34,9 @@ class UserRelationManager extends RelationManager
                     ->label(__('Name')),
                 TextColumn::make('email')
                     ->label(__('Email')),
-                TextColumn::make('created_at')
-                    ->label(__('Created at')),
-            ])
-            ->filters([
-                //
-            ])
+                TextColumn::make('pivot.created_at')
+                    ->label(__('Created at'))])
+            ->defaultSort('callback_order_user.created_at', 'desc')
             ->headerActions(actions: [
                 AttachAction::make()
                     ->label(__('Attach to user'))
@@ -48,10 +45,6 @@ class UserRelationManager extends RelationManager
                         ->searchable()
                         ->required()
                     ),
-            ])
-            ->actions([
-            ])
-            ->bulkActions([
             ]);
     }
 }
