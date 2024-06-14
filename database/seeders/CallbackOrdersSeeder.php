@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CallbackOrder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CallbackOrdersSeeder extends Seeder
@@ -14,5 +14,6 @@ class CallbackOrdersSeeder extends Seeder
     public function run(): void
     {
         CallbackOrder::factory(50)->create();
+        User::factory(10)->create();
     }
 }
