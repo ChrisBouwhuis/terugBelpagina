@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CallbackOrderResource\Pages;
 use App\Models\CallbackOrder;
+use App\Models\User;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -12,8 +13,12 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use function PHPUnit\Framework\callback;
 
 
 class CallbackOrderResource extends Resource
@@ -110,6 +115,16 @@ class CallbackOrderResource extends Resource
                         })
                         ->searchable()
                         ->sortable(),
+                ])
+                ->filters([
+                    Filter::make('Assigned to me')
+                        ->label(__('Assigned to me'))
+                        ->default(true)
+                        ->query(fn (Builder $query): Builder =>
+                        $query->whereHas('user', function (Builder $query) {
+                            $query->where('user_id', Auth::id());
+                        })
+                        ),
                 ])
                 ->actions([
                     EditAction::make()
