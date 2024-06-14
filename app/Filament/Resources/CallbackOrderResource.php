@@ -27,7 +27,7 @@ class CallbackOrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function getPluralModelLabel() : string
+    public static function getPluralModelLabel(): string
     {
         return __('Callback orders');
     }
@@ -93,14 +93,13 @@ class CallbackOrderResource extends Resource
                         ->sortable(),
                     TextColumn::make('updated_at')
                         ->label(__('Updated at'))
-            //                    ->toggleable(isToggledHiddenByDefault: true)
+                        // ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
                     TextColumn::make('user.name')
                         ->limit(12)
                         ->label(__('Assigned to'))
-                        ->searchable()
-                        ->sortable(),
+                        ->searchable(),
                     TextColumn::make('phone')
                         ->label(__('Phone'))
                         ->searchable()
@@ -108,7 +107,7 @@ class CallbackOrderResource extends Resource
                     TextColumn::make('status')
                         ->label(__('Status'))
                         ->badge()
-                        ->color(fn (CallbackOrder $record) => match ($record->status) {
+                        ->color(fn(CallbackOrder $record) => match ($record->status) {
                             'new' => 'gray',
                             'in progress' => 'warning',
                             'done' => 'success',
@@ -120,8 +119,7 @@ class CallbackOrderResource extends Resource
                     Filter::make('Assigned to me')
                         ->label(__('Assigned to me'))
                         ->default(true)
-                        ->query(fn (Builder $query): Builder =>
-                        $query->whereHas('user', function (Builder $query) {
+                        ->query(fn(Builder $query): Builder => $query->whereHas('user', function (Builder $query) {
                             $query->where('user_id', Auth::id());
                         })
                         ),
