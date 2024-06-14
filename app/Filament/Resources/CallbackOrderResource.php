@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CallbackOrderResource\Pages;
 use App\Models\CallbackOrder;
-use App\Models\User;
+use Exception;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -18,7 +18,6 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use function PHPUnit\Framework\callback;
 
 
 class CallbackOrderResource extends Resource
@@ -96,8 +95,7 @@ class CallbackOrderResource extends Resource
                         // ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
-                    TextColumn::make('user.name')
-                        ->limit(12)
+                    TextColumn::make('assignedUser.name')
                         ->label(__('Assigned to'))
                         ->searchable(),
                     TextColumn::make('phone')
@@ -119,7 +117,7 @@ class CallbackOrderResource extends Resource
                     Filter::make('Assigned to me')
                         ->label(__('Assigned to me'))
                         ->default(true)
-                        ->query(fn(Builder $query): Builder => $query->whereHas('user', function (Builder $query) {
+                        ->query(fn(Builder $query): Builder => $query->whereHas('users', function (Builder $query) {
                             $query->where('user_id', Auth::id());
                         })
                         ),
@@ -128,7 +126,7 @@ class CallbackOrderResource extends Resource
                     EditAction::make()
                         ->label(__('Go to order')),
                 ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $table;
         }
     }

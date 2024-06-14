@@ -24,12 +24,18 @@ class CallbackOrder extends Model
         'status',
     ];
 
+    public function assignedUser() : BelongsToMany
+    {
+//        todo try to pull the latest created connection in the pivot table
+        return $this->users()->limit(1);
+    }
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function user(): BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->BelongsToMany(User::class)->withTimestamps();
     }

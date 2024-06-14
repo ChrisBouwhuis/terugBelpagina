@@ -2,21 +2,17 @@
 
 namespace App\Filament\Resources\CallbackOrderResource\RelationManagers;
 
-use AllowDynamicProperties;
-use App\Models\CallbackOrder;
 use App\Models\User;
-use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use function Laravel\Prompts\text;
 
 class UserRelationManager extends RelationManager
 {
-    protected static string $relationship = 'User';
+    protected static string $relationship = 'Users';
 
     public function form(Form $form): Form
     {
