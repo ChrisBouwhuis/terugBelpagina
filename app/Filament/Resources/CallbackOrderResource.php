@@ -95,7 +95,7 @@ class CallbackOrderResource extends Resource
                         // ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
-                    TextColumn::make('assignedUser.name')
+                    TextColumn::make('callback_order_users.assignedUser')
                         ->label(__('Assigned to'))
                         ->searchable(),
                     TextColumn::make('phone')

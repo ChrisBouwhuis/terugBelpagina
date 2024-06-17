@@ -18,6 +18,21 @@ class CallbackOrderUser extends Pivot
      */
     public $incrementing = true;
 
+    public function callbackOrder(): BelongsTo
+    {
+        return $this->belongsTo(CallbackOrder::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function assignedUser(): BelongsTo
+    {
+        return $this->user()->latest()->value('name');
+    }
+
     public static function boot(): void
     {
         static::created(function (User $user) {
