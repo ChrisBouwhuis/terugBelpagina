@@ -31,6 +31,6 @@ class CallbackOrder extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->BelongsToMany(User::class)->withTimestamps()->using(CallbackOrderUser::class);
+        return $this->BelongsToMany(User::class)->withTimestamps();
     }
 }

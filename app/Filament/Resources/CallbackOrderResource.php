@@ -71,10 +71,7 @@ class CallbackOrderResource extends Resource
 
                         Select::make('status')
                             ->label(__('Status'))
-                            ->options([
-                                'in progress' => 'In progress',
-                                'done' => 'Done',
-                            ])
+                            ->options(status::class)
                             ->columnSpan('full')
                             ->required(),
                     ]),
@@ -96,7 +93,7 @@ class CallbackOrderResource extends Resource
                         // ->toggleable(isToggledHiddenByDefault: true)
                         ->dateTime()
                         ->sortable(),
-                    TextColumn::make('callback_order_users.assignedUser')
+                    TextColumn::make('users.name')
                         ->label(__('Assigned to'))
                         ->searchable(),
                     TextColumn::make('phone')
