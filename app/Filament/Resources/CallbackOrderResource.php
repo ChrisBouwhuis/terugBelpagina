@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\status;
 use App\Filament\Resources\CallbackOrderResource\Pages;
 use App\Models\CallbackOrder;
 use Exception;
@@ -106,9 +107,10 @@ class CallbackOrderResource extends Resource
                         ->label(__('Status'))
                         ->badge()
                         ->color(fn(CallbackOrder $record) => match ($record->status) {
-                            'new' => 'gray',
-                            'in progress' => 'warning',
-                            'done' => 'success',
+                            'New' => 'gray',
+                            'In progress' => 'warning',
+                            'Done' => 'success',
+                            default => throw new Exception("Unhandled status: {$record->status}"),
                         })
                         ->searchable()
                         ->sortable(),

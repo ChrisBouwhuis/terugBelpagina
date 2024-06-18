@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Enums\status;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends Factory<Model>
  */
 class CallbackOrderFactory extends Factory
 {
@@ -21,6 +23,7 @@ class CallbackOrderFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'comment' => $this->faker->text,
+            'status' => $this->faker->randomElement([status::new, status::inProgress, status::done]),
         ];
     }
 }

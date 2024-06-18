@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('comment');
             // 0 - new, 1 - in progress, 2 - done
-            $table->enum('status', ['new', 'in progress', 'done'])->default('new');
+            $table->enum('status', ['New', 'In progress', 'Done'])->default('New');
         });
     }
 
